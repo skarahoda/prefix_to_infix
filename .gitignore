@@ -19,6 +19,7 @@
 *.so
 *.so.*
 *.dylib
+.depend
 
 # Executables
 *.exe
@@ -27,3 +28,7 @@
 *.i*86
 *.x86_64
 *.hex
+p2i
+
+#document backups
+*~
