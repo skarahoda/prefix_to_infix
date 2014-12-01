@@ -11,7 +11,7 @@ all: $(EXECUTABLE)
 depend: .depend
 
 .depend: $(SOURCES)
-	rm -f ./.depend
+	rm -rf ./.depend
 	$(CC) $(CFLAGS) -MM $^>>./.depend;
 
 include .depend
@@ -23,4 +23,4 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:
-	rm -f $(OBJECTS) $(EXECUTABLE) .depend
+	rm -rf $(OBJECTS) $(EXECUTABLE) .depend *~
