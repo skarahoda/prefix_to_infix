@@ -3,5 +3,5 @@
 
 typedef enum {tOP=0, tNUM, tVAR, invalid, expression, eof} token;
 
-token nextToken(char ** value);
+token nextToken(char ** value, int * size);
 #endif

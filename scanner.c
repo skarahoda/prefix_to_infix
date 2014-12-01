@@ -3,26 +3,28 @@
 #include <stdio.h>
 #include <string.h>
 
-token nextToken(char ** value)
+token nextToken(char ** value, int * arg_size)
 {
 	char c;
 	int size = 1;
-
+	
 	c = getc(stdin);
-	while( c == '\n' || c == '\t' || c == ' ' )
+	while( c == '\n' || c == '\t' || c == ' ' || c == EOF) 
 	{
+		if( c == EOF )
+		{
+			return eof;
+		}
 		c = getc(stdin);
 	}
-	if( c == EOF )
-		return eof;
 	if( c == '+' || c == '-')
 	{
 		(*value) = (char *) malloc(sizeof(char)*2);
 		(*value)[0] = c;
 		(*value)[1] = '\0';
+		*arg_size = size;
 		return tOP;
 	}
-
 	if( c >= '1' && c <='9')
 	{
 		size++;
@@ -30,7 +32,7 @@ token nextToken(char ** value)
 		(*value)[0] = c;
 		(*value)[1] = '\0';
 		c = getc(stdin);
-		while( c != '\n' && c != '\t' && c != ' ' )
+		while( c != '\n' && c != '\t' && c != ' ' && c != EOF )
 		{
 			if( c >= '0' && c <='9')
 			{
@@ -42,9 +44,10 @@ token nextToken(char ** value)
 			}
 			else
 			{
-				goto invalid_input;
+				return invalid;
 			}
 		}
+		*arg_size = size;
 		return tNUM;
 	}
 	if( ( c >= 'a' && c <='z')
@@ -55,7 +58,7 @@ token nextToken(char ** value)
 		(*value)[0] = c;
 		(*value)[1] = '\0';
 		c = getc(stdin);
-		while( c != '\n' && c != '\t' && c != ' ' )
+		while( c != '\n' && c != '\t' && c != ' ' && c != EOF )
 		{
 			if(( c >= 'a' && c <='z')
 				|| ( c >= 'A' && c <='Z')
@@ -69,12 +72,11 @@ token nextToken(char ** value)
 			}
 			else
 			{
-				goto invalid_input;
+				return invalid;
 			}
 		}
+		*arg_size = size;
 		return tVAR;
 	}
-invalid_input:
-	printf( "Invalid input\n" );
 	return invalid;
 }
