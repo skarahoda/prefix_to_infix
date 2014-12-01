@@ -19,7 +19,6 @@ Semantic functions associated with the grammar rules is given as follows:
 | E -> tOP E E	| E.attr = "(" + E1.attr + tOP.attr + E2.attr + ")"	|
 | E -> tNUM	| E.attr = tNUM						|
 | E -> tVAR	| E.attr = tVAR						|
-|---------------|-------------------------------------------------------|
 
 The translator uses following state machine:
 
@@ -32,34 +31,33 @@ The translator uses following state machine:
 |   4   |   -   |   -   |   -   |   -   |    -    |
 |   5   |   1   |   6   |   3   |   4   |  error  |
 |   6   |   -   |   -   |   -   |   -   |    -    |
-|-------|-------|-------|-------|-------|---------|
 
 State 0:
-	<S> -> ·<E>
-	<E> -> ·<tOP><E><E>
-	<E> -> ·<tNUM>
-	<E> -> ·<tVAR>
+	S -> ·E
+	E -> ·tOP E E
+	E -> ·tNUM
+	E -> ·tVAR
 	
 State 1:
-	<E> -> <tOP>·<E><E>
-	<E> -> ·<tOP><E><E>
-	<E> -> ·<tNUM>
-	<E> -> ·<tVAR>
+	E -> tOP· E E
+	E -> ·tOP E E
+	E -> ·tNUM
+	E -> ·tVAR
 
 State 2:
-	<S> -> <E>·
+	S -> E·
 
 State 3:
-	<E> -> <tNUM>·
+	E -> tNUM·
 	
 State 4:
-	<E> -> <tVAR>·
+	E -> tVAR·
 
 State 5:
-	<E> -> <tOP><E>·<E>
-	<E> -> ·<tOP><E><E>
-	<E> -> ·<tNUM>
-	<E> -> ·<tVAR>
+	E -> tOP E·E
+	E -> ·tOP E E
+	E -> ·tNUM
+	E -> ·tVAR
 	
 State 6:
-	<E> -> <tOP><E><E>·
+	E -> tOP E E·
